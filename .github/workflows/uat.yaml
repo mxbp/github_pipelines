@@ -1,0 +1,23 @@
+---
+name: UAT - Use reusable workflow
+
+on:
+  push:
+    branches:
+      - 'release/**'
+  workflow_dispatch:
+
+jobs:
+  test_1:
+    name: Use reusable job - default
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+    with:
+      inputs_url: http://www.example.com/default
+  test_2:
+    name: Use reusable job - UAT
+    needs: test_1
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+    with:
+      inputs_environment: uat
+      inputs_url: http://uat.example.com
+...

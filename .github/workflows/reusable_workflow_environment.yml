@@ -1,0 +1,23 @@
+---
+name: Reusable workflow with Environments
+
+on:
+  workflow_call:
+    inputs:
+      inputs_environment:
+        required: false
+        type: string
+      inputs_url:
+        required: false
+        type: string
+
+jobs:
+  test_inputs:
+    name: Environment ${{ inputs.inputs_environment || 'default' }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.inputs_environment }}
+    steps:
+    - name: Echo Environment - ${{ inputs.inputs_environment || 'default' }}
+      run: |
+        echo "Environment - ${{ vars.STAGE }}"
+...

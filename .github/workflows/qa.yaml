@@ -1,0 +1,23 @@
+---
+name: QA - Use reusable workflow
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+  workflow_dispatch:
+
+jobs:
+  test_1:
+    name: Use reusable job - default
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+    with:
+      inputs_url: http://www.example.com/default
+  test_2:
+    name: Use reusable job - QA
+    needs: test_1
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+    with:
+      inputs_environment: qa
+      inputs_url: http://qa.example.com/qa
+...

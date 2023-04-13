@@ -1,0 +1,26 @@
+---
+name: DEV - Use reusable workflow
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  test_1:
+    name: Use reusable job - default
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+    with:
+      inputs_url: http://www.example.com/default
+  test_2:
+    name: Use reusable job - DEV
+    needs: test_1
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+    with:
+      inputs_environment: dev
+      inputs_url: http://dev.example.com/dev
+...

@@ -1,0 +1,16 @@
+---
+name: Use reusable workflow
+
+on:
+  push:
+
+jobs:
+  test:
+    name: Use reusable job
+    uses: ./.github/workflows/reusable_workflow.yml
+    with:
+      inputs_test_1: 'Hello reusable workflow!'
+      inputs_test_2: 'Hello reusable workflow!'
+    secrets:
+      secrets_test_1: 'Hello secrets!'
+...

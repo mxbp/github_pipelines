@@ -1,0 +1,34 @@
+---
+name: PROD - Use reusable workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to run tests against
+        type: choice
+        required: true
+        options:
+          - prod
+          - stage
+
+jobs:
+  test_1:
+    name: Use reusable job - default
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+  test_2:
+    name: Use reusable job - PROD
+    needs: test_1
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+    with:
+      inputs_environment: prod
+  test_3:
+    name: Use reusable job - ${{ inputs.environment }}
+    needs: test_2
+    uses: ./.github/workflows/reusable_workflow_environment.yml
+    with:
+      inputs_environment: ${{ inputs.environment }}
+...
