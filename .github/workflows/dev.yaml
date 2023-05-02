@@ -23,4 +23,36 @@ jobs:
     with:
       inputs_environment: dev
       inputs_url: http://dev.example.com/dev
+  pr:
+    name: PR
+    runs-on: ubuntu-latest
+    if: github.event == 'pull_request'
+    steps:
+    - name: PR
+      run: |
+        echo "head_ref: --branch=${{ github.head_ref }}"
+        echo "number: --merge-id=${{ github.event.number }}"
+        echo "- - - - ${{ github.event }} - - - -"
+        echo "ref_name: --branch=${{ github.ref_name }}"
+  push:
+    name: Push
+    runs-on: ubuntu-latest
+    if: github.event == 'push'
+    steps:
+    - name: Push
+      run: |
+        echo "ref_name: --branch=${{ github.ref_name }}"
+        echo "- - - - ${{ github.event }} - - - -"
+        echo "head_ref: --branch=${{ github.head_ref }}"
+        echo "number: --merge-id=${{ github.event.number }}"
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test
+      run: >
+        echo "--branch=${{ github.event == 'pull_request' &&
+        format('--branch={0} --merge-id={1}', github.head_ref, github.event.number) ||
+        format('--branch={0}', github.ref_name) }}"
+        echo "- - - - ${{ github.event }} - - - -"
 ...
