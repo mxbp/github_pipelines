@@ -31,4 +31,29 @@ jobs:
     uses: ./.github/workflows/reusable_workflow_environment.yml
     with:
       inputs_environment: ${{ inputs.environment }}
+  pr:
+    name: PR
+    runs-on: ubuntu-latest
+    if: github.event == 'pull_request'
+    steps:
+    - name: PR
+      run: |
+        echo "head_ref: --branch=${{ github.head_ref }}"
+        echo "number: --merge-id=${{ github.event.number }}"
+  push:
+    name: Push
+    runs-on: ubuntu-latest
+    if: github.event == 'push'
+    steps:
+    - name: Push
+      run: |
+        echo "ref_name: --branch=${{ github.ref_name }}"
+  test:
+    name: PR
+    runs-on: ubuntu-latest
+    if: github.event == 'pull_request'
+    steps:
+    - name: PR
+      run: |
+        echo "--branch=${{ github.event == 'pull_request' && '--branch='github.head_ref ' --merge-id='github.event.number || '--branch=' + github.ref_name }}"
 ...
