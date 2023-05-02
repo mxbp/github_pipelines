@@ -49,7 +49,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-    - name: Test / Build ${{ github.event_name == 'push' && 'and Push' }}
+    - name: Test / ${{ github.event_name == 'pull_request' && 'Build' || 'Build and Push' }}
       run: >
         echo "${{ github.event_name == 'pull_request' &&
         format('--branch={0} --merge-id={1}', github.head_ref, github.event.number) ||
