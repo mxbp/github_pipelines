@@ -55,4 +55,18 @@ jobs:
         format('--branch={0} --merge-id={1}', github.head_ref, github.event.number) ||
         format('--branch={0}', github.ref_name) }}"
         echo "- - - - ${{ github.event_name }} - - - -"
+    - name: Use composite actions
+      uses: ./.github/workflows/actions.yml
+
+    # - name: Checkout branch
+    #   uses: actions/checkout@v3
+    # - name: Update Artifact Version
+    #   run: |
+    #     git config user.name "GitHub Actions Bot"
+    #     git config user.email "<>"
+    #     echo "${{ github.sha }}" > development-version.txt
+    #     git add development-version.txt
+    #     git commit -m "update development version: ${{ github.sha }}"
+    #     git pull --rebase
+    #     git push
 ...

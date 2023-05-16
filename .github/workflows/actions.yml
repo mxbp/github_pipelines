@@ -1,0 +1,16 @@
+---
+name: DEV - Use reusable workflow
+
+on:
+    workflow_call:
+    workflow_dispatch:
+    
+jobs:
+    test:
+      name: Echo
+      runs-on: ubuntu-latest
+      steps:
+      - name: Echo
+        run: |
+          echo "This composite actions"
+...
